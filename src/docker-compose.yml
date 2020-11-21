@@ -7,4 +7,5 @@ services:
       - 8888:8888
     container_name: jupyter
     volumes:
-      - ./notebooks:/home/jovyan
+      - ./notebooks/:/home/jovyan/work/
+    #user: root
