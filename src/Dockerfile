@@ -1,17 +1,21 @@
 FROM jupyter/datascience-notebook:latest
 
-ADD ./requirements.txt /tmp/
-
+# update conda packages
 RUN conda update --yes --all
+
+# install requirements
+ADD ./requirements.txt /tmp/
 RUN conda install --force-reinstall --yes --file /tmp/requirements.txt
 
-RUN conda install jupyter_nbextensions_configurator
-
-RUN conda install jupyter_contrib_nbextensions
+# configure jupyter lab extensions
+RUN conda install --yes jupyter_contrib_nbextensions
 RUN jupyter contrib nbextension install --user
-#TODO abilita le estensioni da qua e fa che workino
+RUN jupyter nbextension enable hinterland/hinterland
 
 EXPOSE 8888
-ENV JUPYTER_ENABLE_LAB=yes
 
+# uncomment to use jupyterlab, but jupyter_contrib_nbextensions won't work
+#ENV JUPYTER_ENABLE_LAB=yes
+
+# uncomment to get root access
 #ENV GRANT_SUDO=yes
